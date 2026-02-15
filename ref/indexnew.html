@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Zamcha — Experience Your Imagination</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#050509;
+  --accent:#7c4dff;
+  --accent-soft:rgba(124,77,255,.35);
+  --text:#fff;
+  --muted:#b9b9d4;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  height:100%;
+  background:var(--bg);
+  font-family:Inter,sans-serif;
+  overflow:hidden;
+  color:var(--text);
+}
+
+canvas{position:fixed;inset:0;z-index:0}
+
+/* NAV */
+nav{
+  position:fixed;top:0;width:100%;
+  padding:22px 56px;
+  display:flex;justify-content:space-between;
+  z-index:10;
+  pointer-events:auto;
+}
+.logo{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition:.3s;
+}
+.logo:hover{transform:translateY(-2px)}
+
+.tour-icon{
+  width:38px;height:38px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);
+  display:grid;place-items:center;
+  cursor:pointer;
+  transition:.4s cubic-bezier(.4,0,.2,1);
+}
+.tour-icon:hover{
+  transform:rotate(90deg) scale(1.15);
+  box-shadow:0 0 35px var(--accent-soft);
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  display:grid;place-items:center;
+  text-align:center;
+  position:relative;
+  z-index:5;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(4rem,9vw,7.5rem);
+  letter-spacing:6px;
+  transition:.4s cubic-bezier(.4,0,.2,1);
+}
+.hero p{
+  margin-top:20px;
+  letter-spacing:1.6px;
+  color:var(--muted);
+  transition:.4s;
+}
+.hero h1:hover{
+  transform:scale(1.05);
+  text-shadow:0 0 55px var(--accent);
+}
+.hero p:hover{
+  letter-spacing:2.6px;
+  color:#fff;
+}
+
+/* CTA */
+footer{
+  position:fixed;
+  bottom:36px;
+  right:56px;
+  z-index:10;
+}
+.cta{
+  position:relative;
+  padding:14px 40px;
+  border-radius:999px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.35);
+  color:#fff;
+  letter-spacing:1.5px;
+  cursor:pointer;
+  overflow:hidden;
+  transition:.25s ease-out;
+}
+.cta::before{
+  content:"";
+  position:absolute;
+  inset:-120%;
+  background:radial-gradient(circle,var(--accent-soft),transparent 60%);
+  opacity:0;
+  transition:.4s;
+}
+.cta:hover::before{opacity:1}
+.cta:hover{
+  box-shadow:0 15px 45px rgba(124,77,255,.45);
+}
+
+/* CINEMATIC TRANSITION */
+.transition{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center,#7c4dff,#050509 70%);
+  opacity:0;
+  pointer-events:none;
+  transition:1.2s cubic-bezier(.4,0,.2,1);
+  z-index:50;
+}
+.transition.active{opacity:1}
+
+/* MOBILE */
+@media(max-width:640px){
+  nav{padding:18px 24px}
+  footer{right:24px;bottom:24px}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<nav>
+  <div class="logo">Zamcha</div>
+  <div class="tour-icon">→</div>
+</nav>
+
+<section class="hero">
+  <div>
+    <h1>Zamcha</h1>
+    <p>Experience your Imagination.</p>
+  </div>
+</section>
+
+<footer>
+  <button class="cta">Take Tour</button>
+</footer>
+
+<div class="transition" id="transition"></div>
+
+<script>
+/* ========= BACKGROUND ENGINE ========= */
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let w,h,t=0;
+let mouse={x:0,y:0};
+
+function resize(){
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener('resize',resize);
+
+window.addEventListener('mousemove',e=>{
+  mouse.x=e.clientX;
+  mouse.y=e.clientY;
+});
+
+function render(){
+  ctx.clearRect(0,0,w,h);
+
+  const cx = mouse.x || w/2;
+  const cy = mouse.y || h/2;
+  const r = Math.max(w,h)*.65;
+
+  const grad = ctx.createRadialGradient(cx,cy,0,cx,cy,r);
+  grad.addColorStop(0,`hsla(${260+Math.sin(t)*20},80%,65%,.45)`);
+  grad.addColorStop(.45,'rgba(124,77,255,.18)');
+  grad.addColorStop(1,'transparent');
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,w,h);
+
+  t+=.008;
+  requestAnimationFrame(render);
+}
+render();
+
+/* ========= MAGNETIC UI ========= */
+document.querySelectorAll('.cta,.logo,.tour-icon').forEach(el=>{
+  el.addEventListener('mousemove',e=>{
+    const r=el.getBoundingClientRect();
+    el.style.transform=`translate3d(${(e.clientX-r.left-r.width/2)/8}px,${(e.clientY-r.top-r.height/2)/8}px,0)`;
+  });
+  el.addEventListener('mouseleave',()=>el.style.transform='');
+});
+
+/* ========= TOUR TRANSITION ========= */
+const transition=document.getElementById('transition');
+document.querySelector('.cta').addEventListener('click',()=>{
+  transition.classList.add('active');
+  setTimeout(()=>alert('Tour Experience Begins 🚀'),1200);
+});
+
+/* ========= AMBIENT SOUND (SAFE) ========= */
+let ambient;
+document.querySelector('.cta').addEventListener('click',()=>{
+  if(!ambient){
+    ambient=new Audio('https://cdn.pixabay.com/audio/2022/03/15/audio_6b8b64dbb6.mp3');
+    ambient.loop=true;
+    ambient.volume=.25;
+    ambient.play();
+  }
+});
+</script>
+
+</body>
+</html>

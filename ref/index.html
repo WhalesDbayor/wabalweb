@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Zamcha — Experience Your Imagination</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050509;
+      --violet: #7c4dff;
+      --violet-soft: rgba(124,77,255,0.25);
+      --text-main: #ffffff;
+      --text-muted: #b9b9d4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ===== BACKGROUND LAYERS ===== */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg::before,
+    .bg::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(
+        circle at center,
+        rgba(124,77,255,0.45),
+        rgba(124,77,255,0.15),
+        transparent 70%
+      );
+      animation: breathe 8s ease-in-out infinite;
+      filter: blur(90px);
+    }
+
+    .bg::after {
+      animation-delay: -4s;
+      opacity: 0.7;
+    }
+
+    @keyframes breathe {
+      0% { transform: scale(0.95); opacity: 0.4; }
+      50% { transform: scale(1.15); opacity: 0.8; }
+      100% { transform: scale(0.95); opacity: 0.4; }
+    }
+
+    /* Subtle film grain */
+    .grain {
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 22px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 5;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+    }
+
+    .tour-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.25);
+      display: grid;
+      place-items: center;
+      transition: all .35s ease;
+      cursor: pointer;
+    }
+
+    .tour-icon:hover {
+      box-shadow: 0 0 20px var(--violet-soft);
+      transform: scale(1.15) rotate(90deg);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      z-index: 3;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 8vw, 6.5rem);
+      letter-spacing: 4px;
+      line-height: 1;
+      transition: transform .4s ease, text-shadow .4s ease;
+    }
+
+    .hero h1:hover {
+      transform: scale(1.04);
+      text-shadow: 0 0 40px var(--violet);
+    }
+
+    .hero p {
+      margin-top: 16px;
+      font-size: 1.05rem;
+      letter-spacing: 1.4px;
+      color: var(--text-muted);
+      transition: letter-spacing .4s ease, color .4s ease;
+    }
+
+    .hero p:hover {
+      color: #fff;
+      letter-spacing: 2.2px;
+    }
+
+    /* ===== CTA ===== */
+    footer {
+      position: fixed;
+      bottom: 36px;
+      right: 56px;
+      z-index: 5;
+    }
+
+    .cta {
+      position: relative;
+      padding: 14px 38px;
+      border-radius: 999px;
+      background: transparent;
+      color: #fff;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      border: 1px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform .3s ease;
+    }
+
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: -60%;
+      background: radial-gradient(circle, var(--violet-soft), transparent 65%);
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+
+    .cta:hover::before {
+      opacity: 1;
+    }
+
+    .cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(124,77,255,0.35);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      nav {
+        padding: 18px 24px;
+      }
+      footer {
+        right: 24px;
+        bottom: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background -->
+  <div class="bg"></div>
+  <div class="grain"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Zamcha</div>
+    <div class="tour-icon">→</div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <h1>Zamcha</h1>
+      <p>Experience your Imagination.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <footer>
+    <button class="cta">Take Tour</button>
+  </footer>
+
+</body>
+</html>
