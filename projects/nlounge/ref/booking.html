@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N LOUNGE & SPA | The Booking Vault</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --nude: #F5EBE0;
+            --dark: #070707;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --transition-flow: all 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--dark);
+            color: var(--nude);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            filter: contrast(1.1) brightness(0.9);
+        }
+
+        /* --- LOGO & NAV --- */
+        header {
+            position: fixed;
+            top: 40px;
+            width: 100%;
+            padding: 0 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.7rem;
+            pointer-events: none;
+        }
+
+        .logo { font-size: 1.2rem; font-weight: 200; pointer-events: auto; cursor: pointer; }
+        .logo span { color: var(--gold); }
+
+        /* --- HERO SECTION --- */
+        #hero-ui {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: var(--transition-flow);
+        }
+
+        #hero-ui.away {
+            opacity: 0;
+            transform: scale(1.2) translateY(-50px);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 7rem);
+            line-height: 0.85;
+            font-weight: 200;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .italic { font-style: italic; font-family: serif; color: var(--gold); }
+
+        .magnetic-btn {
+            background: none;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 22px 50px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+            z-index: 20;
+        }
+
+        .magnetic-btn:hover {
+            background: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- BOOKING VAULT (THE FLOW TARGET) --- */
+        #booking-vault {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition-flow);
+            backdrop-filter: blur(0px);
+        }
+
+        #booking-vault.active {
+            opacity: 1;
+            pointer-events: auto;
+            backdrop-filter: blur(25px);
+        }
+
+        .vault-container {
+            width: 90%;
+            max-width: 1000px;
+            transform: translateY(100px) scale(0.9);
+            transition: var(--transition-flow);
+        }
+
+        #booking-vault.active .vault-container {
+            transform: translateY(0) scale(1);
+        }
+
+        .vault-header {
+            text-align: left;
+            margin-bottom: 50px;
+            border-left: 1px solid var(--gold);
+            padding-left: 30px;
+        }
+
+        .vault-header h2 { font-size: 2.5rem; font-weight: 200; text-transform: uppercase; }
+
+        .booking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 40px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .service-card h3 { font-size: 1.2rem; font-weight: 400; margin-bottom: 10px; text-transform: uppercase; }
+        .service-card p { font-size: 0.8rem; opacity: 0.6; letter-spacing: 1px; }
+        .service-card .price { margin-top: 20px; display: block; color: var(--gold); font-weight: 600; }
+
+        .close-btn {
+            position: absolute;
+            top: -60px;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--nude);
+            cursor: pointer;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+        }
+
+        /* --- UTILS --- */
+        .v-line {
+            width: 1px;
+            height: 100px;
+            background: var(--gold);
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo" onclick="exitBooking()">N LOUNGE<span>&</span>SPA</div>
+        <div>BANANA VILLAGE • DIGITAL VAULT</div>
+    </header>
+
+    <main id="hero-ui">
+        <div class="v-line"></div>
+        <h1>Step Into<br><span class="italic">Elegance</span></h1>
+        <p>A Sensory Beauty-Tech Sanctuary in Lagos.</p>
+        <button class="magnetic-btn" onclick="enterBooking()">BOOK EXPERIENCE</button>
+    </main>
+
+    <div id="booking-vault">
+        <div class="vault-container">
+            <button class="close-btn" onclick="exitBooking()">[ ESCAPE VAULT ]</button>
+            <div class="vault-header">
+                <h2>Select Your Ritual</h2>
+                <p>Curated excellence for the modern elite.</p>
+            </div>
+            
+            <div class="booking-grid">
+                <div class="service-card">
+                    <h3>Iconic Nail Artistry</h3>
+                    <p>Viral trends meet precision craft.</p>
+                    <span class="price">₦45,000</span>
+                </div>
+                <div class="service-card">
+                    <h3>Silk Hair Ritual</h3>
+                    <p>Advanced molecular hair restoration.</p>
+                    <span class="price">₦95,000</span>
+                </div>
+                <div class="service-card">
+                    <h3>Tech-Infused Facial</h3>
+                    <p>Next-gen skin rejuvenation.</p>
+                    <span class="price">₦70,000</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // --- THREE.JS ENGINE ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // --- THE "PRECISION" CRYSTAL ---
+        // Replacing the liquid plane with a complex refractive geometry
+        const geometry = new THREE.IcosahedronGeometry(2.5, 1); 
+        const material = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            metalness: 0.1,
+            roughness: 0.05,
+            transmission: 0.95, // High refraction
+            thickness: 1.5,
+            transparent: true,
+            wireframe: false,
+            emissive: 0xD4AF37,
+            emissiveIntensity: 0.02
+        });
+
+        const crystal = new THREE.Mesh(geometry, material);
+        scene.add(crystal);
+
+        // Lighting System
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+        scene.add(ambientLight);
+
+        const pointLight = new THREE.PointLight(0xD4AF37, 2);
+        pointLight.position.set(5, 5, 5);
+        scene.add(pointLight);
+
+        camera.position.z = 8;
+
+        // --- THE FLOW LOGIC ---
+        let isBooking = false;
+
+        function enterBooking() {
+            isBooking = true;
+            document.getElementById('hero-ui').classList.add('away');
+            
+            // Animate Camera Zoom In
+            animateZoom(3.8); 
+            
+            setTimeout(() => {
+                document.getElementById('booking-vault').classList.add('active');
+            }, 600);
+        }
+
+        function exitBooking() {
+            isBooking = false;
+            document.getElementById('booking-vault').classList.remove('active');
+            document.getElementById('hero-ui').classList.remove('away');
+            
+            // Animate Camera Zoom Out
+            animateZoom(8);
+        }
+
+        function animateZoom(targetZ) {
+            const zoomSpeed = 0.04;
+            function step() {
+                const diff = targetZ - camera.position.z;
+                camera.position.z += diff * zoomSpeed;
+                if (Math.abs(diff) > 0.01) {
+                    requestAnimationFrame(step);
+                }
+            }
+            step();
+        }
+
+        // --- ANIMATION LOOP ---
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotation reflects the "precision" state
+            const rotationSpeed = isBooking ? 0.015 : 0.003;
+            crystal.rotation.y += rotationSpeed;
+            crystal.rotation.x += rotationSpeed * 0.5;
+
+            // Mouse interaction
+            if (!isBooking) {
+                crystal.position.x += (mouseX - crystal.position.x) * 0.05;
+                crystal.position.y += (-mouseY - crystal.position.y) * 0.05;
+            } else {
+                crystal.position.x *= 0.9; // Center when booking
+                crystal.position.y *= 0.9;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>

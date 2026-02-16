@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Feels - Body & Soul</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #c9c3b6;
+            --text-dark: #2a2a2a;
+            --accent-green: #6b6d58;
+            --white: #ffffff;
+            --serif: 'Playfair Display', serif;
+            --sans: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            font-family: var(--sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), 
+                        url('https://images.unsplash.com/photo-1544161515-4af6b1d8e159?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;
+            border-bottom-left-radius: 50% 100px;
+            border-bottom-right-radius: 50% 100px;
+            color: white;
+            padding: 20px 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links span { margin: 0 15px; cursor: pointer; }
+
+        .hero-content {
+            margin: auto;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .hero-content h1 {
+            font-family: var(--serif);
+            font-size: 8rem;
+            line-height: 0.9;
+            font-weight: 400;
+        }
+
+        .hero-content h1 span { font-style: italic; }
+
+        /* Generic Section Styling */
+        section { padding: 100px 10%; position: relative; }
+
+        .section-title {
+            font-family: var(--serif);
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        /* Pill Images Grid */
+        .organic-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            align-items: center;
+        }
+
+        .pill-img {
+            width: 100%;
+            border-radius: 200px;
+            object-fit: cover;
+        }
+
+        .tall { height: 500px; }
+        .short { height: 300px; }
+
+        /* Services Full-Width Sections */
+        .service-row {
+            height: 400px;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 10%;
+            margin-bottom: 10px;
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-transform: lowercase;
+        }
+
+        .service-row h2 {
+            font-family: var(--serif);
+            font-size: 5rem;
+            font-weight: 400;
+        }
+
+        .btn-outline {
+            border: 1px solid white;
+            padding: 10px 20px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 0.7rem;
+        }
+
+        /* Subscription Cards */
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .card {
+            background: #b8b1a3;
+            padding: 40px;
+            border-radius: 200px 200px 0 0;
+            width: 350px;
+            text-align: center;
+        }
+
+        .card.dark { background: var(--accent-green); color: white; }
+
+        .card img {
+            width: 100%;
+            height: 300px;
+            border-radius: 150px;
+            object-fit: cover;
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--accent-green);
+            color: white;
+            padding: 80px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .footer-logo { font-family: var(--serif); font-size: 2rem; }
+
+        /* Decorative Background SVG Line */
+        .bg-line {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">IN FEELS</div>
+            <div class="nav-links">
+                <span>About</span><span>Services</span><span>Subscription</span><span>Gallery</span><span>Contacts</span>
+            </div>
+            <div>+7 (499) 430-01-93</div>
+        </nav>
+        <div class="hero-content">
+            <h1>keep your <span>body</span> and <span>soul</span> together</h1>
+            <p style="margin-top: 30px; font-size: 0.9rem; max-width: 400px; margin-left: auto;">A nurturing space for healthy body beauty and mental well-being...</p>
+        </div>
+    </header>
+
+    <section>
+        <h2 class="section-title" style="max-width: 700px; margin: 0 auto 80px;">beauty is not a characteristic. it is a state — a healthy, calm and well-groomed body.</h2>
+        
+        <div class="organic-grid">
+            <div style="font-size: 0.8rem;">Megapolis is used to its active rhythm and lack of time for oneself...</div>
+            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80&w=600" class="pill-img tall" alt="Yoga">
+            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=600" class="pill-img short" alt="Spa">
+        </div>
+    </section>
+
+    <section id="services">
+        <h2 class="section-title">services</h2>
+        <div class="service-row" style="background-image: url('nail_skincare.jpg')">
+            <div>
+                <h2>body</h2>
+                <button class="btn-outline">SHOW SERVICES</button>
+            </div>
+        </div>
+        <div class="service-row" style="background-image: url('nail_skincare.jpg')">
+            <div>
+                <h2>face</h2>
+                <button class="btn-outline">SHOW SERVICES</button>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">abonements <br> and certificates</h2>
+        <div class="cards-container">
+            <div class="card">
+                <h3>icoone</h3>
+                <p>apparatus massage</p>
+                <div style="margin: 20px 0; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 10px;">
+                    <strong>13 500 rub.</strong><br><small>Subscription for 3 treatments</small>
+                </div>
+                <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&q=80&w=600" alt="Treatment">
+            </div>
+            <div class="card dark">
+                <h3>treatments <br> facial and body</h3>
+                <div style="margin: 20px 0; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px;">
+                    <strong>3 800 rub.</strong><br><small>Gift certificate</small>
+                </div>
+                <img src="https://images.unsplash.com/photo-1596178065887-1198b6148b2b?auto=format&fit=crop&q=80&w=600" alt="Face Care">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div>
+            <div class="footer-logo">IN FEELS</div>
+            <p style="font-size: 0.7rem; margin-top: 20px;">IP Pavlova Kate<br>INN 616618730140</p>
+        </div>
+        <div style="text-align: right;">
+            <p>moscow, ul. pogodinskaya, 2</p>
+            <h2 style="font-family: var(--serif); margin: 10px 0;">+7 (499) 430-01-93</h2>
+        </div>
+    </footer>
+
+</body>
+</html>

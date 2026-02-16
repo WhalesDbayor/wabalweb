@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations | Arma Protocol</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="styles/services.css">
+</head>
+
+<body>
+
+    <div id="canvas-container"></div>
+    <canvas id="reticle-canvas"></canvas>
+
+    <nav class="fixed w-full z-50 px-8 py-6 flex justify-between items-center glass">
+        <div class="text-2xl font-extrabold tracking-tighter">ARMA <span class="text-blue-500">PROTOCOL</span></div>
+        <div class="hidden md:flex space-x-10 text-xs uppercase tracking-[0.2em] font-bold">
+            <a href="index.html" class="hover:text-blue-400 transition">Home</a>
+            <a href="about.html" class="hover:text-blue-400 transition">About</a>
+            <a href="services.html" class="text-blue-500 underline underline-offset-8">Services</a>
+            <a href="contact.html" class="hover:text-blue-400 transition">Contact</a>
+        </div>
+    </nav>
+
+    <section class="pt-48 pb-20 px-8 md:px-20">
+        <h6 class="text-blue-500 font-bold uppercase tracking-[0.4em] text-xs mb-4">Operations Center</h6>
+        <h1 class="hero-text opacity-0" id="header-title">TACTICAL <br><span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-700">SOLUTIONS.</span></h1>
+    </section>
+
+    <section class="pb-40 px-8 md:px-20 relative z-10">
+        <div class="flex flex-col border-t border-white/10">
+            <div class="service-row py-10 flex flex-col md:flex-row md:items-center justify-between group"
+                data-img="images/1.jpg">
+                <div class="flex items-center gap-6">
+                    <span class="font-mono text-blue-500/50 text-sm">PRT-01</span>
+                    <h2 class="service-title group-hover:italic">Close Protection</h2>
+                </div>
+                <p class="max-w-xs text-gray-500 text-xs uppercase tracking-[0.2em] mt-4 md:mt-0">Executive & VIP
+                    Security</p>
+            </div>
+
+            <div class="service-row py-10 flex flex-col md:flex-row md:items-center justify-between group"
+                data-img="images/bikeescort.jpg">
+                <div class="flex items-center gap-6">
+                    <span class="font-mono text-blue-500/50 text-sm">PRT-02</span>
+                    <h2 class="service-title group-hover:italic">Bike Escort</h2>
+                </div>
+                <p class="max-w-xs text-gray-500 text-xs uppercase tracking-[0.2em] mt-4 md:mt-0">Rapid Mobility
+                    Response</p>
+            </div>
+
+            <div class="service-row py-10 flex flex-col md:flex-row md:items-center justify-between group"
+                data-img="images/SaveClip.App_411671135_802874451528885_1431129635366852817_n.jpg">
+                <div class="flex items-center gap-6">
+                    <span class="font-mono text-blue-500/50 text-sm">PRT-03</span>
+                    <h2 class="service-title group-hover:italic">Space Management</h2>
+                </div>
+                <p class="max-w-xs text-gray-500 text-xs uppercase tracking-[0.2em] mt-4 md:mt-0">Strategic Venue Flow
+                </p>
+            </div>
+
+            <div class="service-row py-10 flex flex-col md:flex-row md:items-center justify-between group"
+                data-img="images/SaveClip.App_469198695_18294205822238508_270405980621955561_n.jpg">
+                <div class="flex items-center gap-6">
+                    <span class="font-mono text-blue-500/50 text-sm">PRT-04</span>
+                    <h2 class="service-title group-hover:italic">Crowd Control</h2>
+                </div>
+                <p class="max-w-xs text-gray-500 text-xs uppercase tracking-[0.2em] mt-4 md:mt-0">Mass Event Security
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="service-img-preview" id="img-preview">
+        <img src="" id="target-img" alt="Operational Setup">
+    </div>
+
+    <footer class="relative z-10 pt-20 pb-10 px-8 md:px-20 border-t border-white/5 bg-[#050a0f]">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+
+            <div class="md:col-span-2">
+                <div class="text-3xl font-black tracking-tighter mb-6">ARMA <span class="text-blue-500">PROTOCOL</span>
+                </div>
+                <p class="text-gray-500 max-w-sm text-sm leading-relaxed mb-8">
+                    Providing innovative integration of anonymity, trust, and post-quantum security.
+                    Securing communications, networks, and physical environments in hostile landscapes.
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="flex text-yellow-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-bold tracking-widest uppercase">4.9 Google Rating</span>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-blue-500 uppercase tracking-[0.3em] mb-6">Operations</h4>
+                <ul class="space-y-4 text-sm text-gray-400">
+                    <li><a href="index.html" class="hover:text-white transition">Home Dashboard</a></li>
+                    <li><a href="about.html" class="hover:text-white transition">The Agency</a></li>
+                    <li><a href="services.html" class="hover:text-white transition">Tactical Services</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition">Deployment/Contact</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-blue-500 uppercase tracking-[0.3em] mb-6">System Status</h4>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-xs uppercase tracking-widest text-gray-400">Global Response Ready</span>
+                    </div>
+                    <div class="text-xs text-gray-500 font-mono" id="footer-time">
+                        UTC: 00:00:00
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-10 text-[10px] uppercase tracking-[0.2em] text-gray-600">
+            <p>&copy; 2026 ARMA PROTOCOL AND LOGISTICS. ALL RIGHTS RESERVED.</p>
+            <div class="flex gap-8 mt-4 md:mt-0">
+                <a href="#" class="hover:text-blue-500 transition">Privacy Protocol</a>
+                <a href="#" class="hover:text-blue-500 transition">Terms of Engagement</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/services.js"></script>
+
+</body>
+
+</html>

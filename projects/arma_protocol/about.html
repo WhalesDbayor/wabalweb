@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Arma Protocol & Logistics</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="styles/about.css">
+</head>
+
+<body>
+
+    <div id="canvas-container"></div>
+
+    <nav class="fixed w-full z-50 px-8 py-6 flex justify-between items-center glass">
+        <div class="text-2xl font-extrabold tracking-tighter">ARMA <span class="text-blue-500">PROTOCOL</span></div>
+        <div class="hidden md:flex space-x-10 text-xs uppercase tracking-[0.2em] font-bold">
+            <a href="index.html" class="hover:text-blue-400 transition">Home</a>
+            <a href="#" class="text-blue-500">The Agency</a>
+            <a href="#" class="hover:text-blue-400 transition">Operations</a>
+            <a href="#" class="bg-blue-600 px-6 py-2 rounded-lg hover:bg-blue-500 transition">Enquire</a>
+        </div>
+    </nav>
+
+    <section class="relative min-h-[80vh] flex flex-col justify-center px-8 md:px-20 pt-48">
+        <div class="scrolling-text" id="scroll-text">EXCELLENCE • DISCRETION • SECURITY</div>
+        <div class="relative z-10">
+            <h1 class="text-6xl md:text-8xl font-extrabold leading-[0.9] mb-8" id="hero-title">
+                ELITE BY <br><span class="text-blue-500 italic">DESIGN.</span>
+            </h1>
+            <p class="max-w-xl text-gray-400 text-lg md:text-xl leading-relaxed" id="hero-para">
+                Arma Protocol and Logistics is more than a security firm. We are a tactical response agency integrating
+                modern technology with elite physical protection.
+            </p>
+        </div>
+    </section>
+
+    <!-- <section class="relative pt-48 pb-20 px-8 md:px-20 overflow-hidden">
+        <div class="parallax-text" id="scroll-text">EXCELLENCE • DISCRETION • SECURITY</div>
+        <div class="relative z-10 max-w-5xl">
+            <h1 class="text-6xl md:text-8xl font-black italic leading-none mb-6 opacity-0" id="title-main">
+                BEYOND <br><span class="text-blue-500">BOUNDARIES.</span>
+            </h1>
+            <p class="text-xl text-gray-400 max-w-2xl leading-relaxed opacity-0" id="subtitle">
+                Arma Protocol and Logistics is more than a security firm. We are a tactical response agency integrating modern technology with elite physical protection.
+            </p>
+        </div>
+    </section> -->
+
+    <section class="py-24 px-8 md:px-20 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div class="reveal-box" id="reveal-trigger">
+            <div class="reveal-overlay" id="overlay"></div>
+            <img src="/arma_protocol/448404113_1181811986571972_6154324344305664736_n.webp" alt="Security professional"
+                class="reveal-img w-full h-[600px] object-cover" id="main-img">
+        </div>
+
+        <div class="space-y-10">
+            <div>
+                <h6 class="text-blue-500 font-bold uppercase tracking-widest text-sm mb-4">Our DNA</h6>
+                <h2 class="text-4xl md:text-5xl font-bold leading-tight">Securing the future in hostile environments.
+                </h2>
+            </div>
+
+            <!-- <p class="text-gray-400 text-lg">
+                Recognized for our excellence in securing communications, HNWIs, and physical collaboration systems, ARMA provides a bridge between high-end logistics and impenetrable protection.
+            </p> -->
+            <p class="text-gray-400 text-lg">
+                Our team of highly trained professionals combines cutting-edge technology with tactical expertise to
+                deliver unparalleled protection services.
+            </p>
+            <div class="grid grid-cols-2 gap-8 border-t border-white/10 pt-10">
+                <div>
+                    <div class="text-5xl font-extrabold text-white mb-2">4.9</div>
+                    <div class="text-blue-500 text-xs uppercase font-bold tracking-widest">Google Rating</div>
+                </div>
+                <div>
+                    <div class="text-5xl font-extrabold text-white mb-2">5★</div>
+                    <div class="text-blue-500 text-xs uppercase font-bold tracking-widest">Service Quality</div>
+                </div>
+            </div>
+
+            <blockquote class="border-l-4 border-blue-600 pl-6 italic text-gray-300 py-2">
+                "Tested, Trusted, and Reliable. ARMA makes you look forward to your next occasion knowing your safety is
+                assured."
+            </blockquote>
+        </div>
+    </section>
+
+    <section class="py-20 bg-black/30 overflow-hidden">
+        <div class="px-8 md:px-20 mb-12">
+            <h2 class="text-3xl font-bold uppercase tracking-tighter">The Core Protocols</h2>
+        </div>
+
+        <div class="flex space-x-6 px-8 md:px-20 overflow-x-auto no-scrollbar pb-10" id="cards-container">
+            <div class="min-w-[350px] glass p-10 rounded-3xl value-card">
+                <span class="text-blue-500 font-black text-4xl mb-6 block">01</span>
+                <h4 class="text-xl font-bold mb-4">Innovation</h4>
+                <p class="text-gray-400">Integration of post-quantum security concepts into everyday physical protection
+                    and logistics.</p>
+            </div>
+            <div class="min-w-[350px] glass p-10 rounded-3xl value-card border-b-4 border-blue-600">
+                <span class="text-blue-500 font-black text-4xl mb-6 block">02</span>
+                <h4 class="text-xl font-bold mb-4">Anonymity</h4>
+                <p class="text-gray-400">We prioritize the privacy of our clients, ensuring movements and communications
+                    stay off the grid.</p>
+            </div>
+            <div class="min-w-[350px] glass p-10 rounded-3xl value-card">
+                <span class="text-blue-500 font-black text-4xl mb-6 block">03</span>
+                <h4 class="text-xl font-bold mb-4">Scalability</h4>
+                <p class="text-gray-400">From individual close protection to large-scale event crowd control and space
+                    management.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-32 text-center">
+        <h2 class="text-4xl md:text-6xl font-extrabold mb-10">READY FOR ARMA?</h2>
+        <a href="mailto:contact@armaprotocol.com"
+            class="px-12 py-5 bg-white text-black font-bold rounded-full hover:bg-blue-500 hover:text-white transition-all transform hover:scale-110 inline-block">
+            REQUEST DEPLOYMENT
+        </a>
+    </footer>
+
+    <footer class="relative z-10 pt-20 pb-10 px-8 md:px-20 border-t border-white/5 bg-[#050a0f]">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+
+            <div class="md:col-span-2">
+                <div class="text-3xl font-black tracking-tighter mb-6">ARMA <span class="text-blue-500">PROTOCOL</span>
+                </div>
+                <p class="text-gray-500 max-w-sm text-sm leading-relaxed mb-8">
+                    Providing innovative integration of anonymity, trust, and post-quantum security.
+                    Securing communications, networks, and physical environments in hostile landscapes.
+                </p>
+                <div class="flex items-center gap-4">
+                    <div class="flex text-yellow-500">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="text-xs font-bold tracking-widest uppercase">4.9 Google Rating</span>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-blue-500 uppercase tracking-[0.3em] mb-6">Operations</h4>
+                <ul class="space-y-4 text-sm text-gray-400">
+                    <li><a href="index.html" class="hover:text-white transition">Home Dashboard</a></li>
+                    <li><a href="about.html" class="hover:text-white transition">The Agency</a></li>
+                    <li><a href="services.html" class="hover:text-white transition">Tactical Services</a></li>
+                    <li><a href="contact.html" class="hover:text-white transition">Deployment/Contact</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold text-blue-500 uppercase tracking-[0.3em] mb-6">System Status</h4>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-xs uppercase tracking-widest text-gray-400">Global Response Ready</span>
+                    </div>
+                    <div class="text-xs text-gray-500 font-mono" id="footer-time">
+                        UTC: 00:00:00
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-10 text-[10px] uppercase tracking-[0.2em] text-gray-600">
+            <p>&copy; 2026 ARMA PROTOCOL AND LOGISTICS. ALL RIGHTS RESERVED.</p>
+            <div class="flex gap-8 mt-4 md:mt-0">
+                <a href="#" class="hover:text-blue-500 transition">Privacy Protocol</a>
+                <a href="#" class="hover:text-blue-500 transition">Terms of Engagement</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/about.js"></script>
+</body>
+
+</html>

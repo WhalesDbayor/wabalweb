@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N Lounge & Spa | Futuristic Luxury Beauty Lagos</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="loading">
+
+    <div id="preloader">
+        <div class="loader-logo">N LOUNGE</div>
+        <div class="loader-bar"><span></span></div>
+    </div>
+
+    <div class="custom-cursor"></div>
+    <div class="scroll-progress"></div>
+    
+    <nav class="app-nav glass">
+        <div class="logo">N<span>L</span></div>
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="#experience">Experience</a>
+            <button class="cta-booking">Book Now</button>
+        </div>
+    </nav>
+
+    <main id="smooth-wrapper">
+        <div id="smooth-content">
+
+            <section class="hero" id="home">
+                <canvas id="hero-canvas"></canvas>
+                <div class="hero-text-container">
+                    <h1 class="reveal-type">Where Beauty <br><span class="italic-gold">Meets Experience</span></h1>
+                    <p class="fade-in">Located in the Heart of Banana Village, Lagos.</p>
+                    <div class="hero-actions">
+                        <button class="btn-primary ripple">Book Experience</button>
+                        <button class="btn-outline">Explore Services</button>
+                    </div>
+                </div>
+                <div class="scroll-indicator">
+                    <span>SCROLL TO DISCOVER</span>
+                    <div class="line"></div>
+                </div>
+            </section>
+
+            <section class="story-scene" id="experience">
+                <div class="parallax-bg-text">EXCLUSIVITY</div>
+                <div class="content-grid">
+                    <div class="image-reveal">
+                        <img src="luxury-interior.jpg" alt="N Lounge Interior" data-parallax="0.2">
+                    </div>
+                    <div class="text-block">
+                        <h2 class="stagger-up">The Craft</h2>
+                        <p class="stagger-up">Precision meets artistry. Our space is more than a salon; it is a lifestyle sanctuary designed for the modern woman who demands trend leadership and sensory relaxation.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="services-app" id="services">
+                <div class="section-header">
+                    <h3>Curated Rituals</h3>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card glass-morph" data-service="nails">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <span class="category">Artistry</span>
+                            <h4>Iconic Nails</h4>
+                            <p>From viral trends to classic elegance.</p>
+                        </div>
+                    </div>
+                    </div>
+            </section>
+
+            <section class="transformations">
+                <div class="slider-container">
+                    <div class="ba-slider">
+                        <div class="img background-img"></div>
+                        <div class="img foreground-img"></div>
+                        <input type="range" min="1" max="100" value="50" class="slider" id="compare-slider">
+                        <div class="slider-button"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="booking-footer">
+                <div class="location-card glass">
+                    <h4>Visit Us</h4>
+                    <p>Banana Village, Lagos, Nigeria</p>
+                    <div class="map-placeholder" id="animated-map"></div>
+                    <a href="https://wa.me/yourlink" class="whatsapp-btn">Direct WhatsApp <span>→</span></a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

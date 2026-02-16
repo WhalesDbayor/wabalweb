@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap');
+
+:root {
+  --accent: #1F9CF0;
+  --dark-bg: #050a0f;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: white;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+/* 3D Background Container */
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Image Reveal Effect */
+.reveal-box {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.reveal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  z-index: 2;
+  transform: translateX(-100%);
+}
+
+.reveal-img {
+  transform: scale(1.3);
+  transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Giant Background Text */
+.scrolling-text {
+  font-size: 18vw;
+  font-weight: 800;
+  color: white;
+  opacity: 0.02;
+  white-space: nowrap;
+  position: absolute;
+  top: 30%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

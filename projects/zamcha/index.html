@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zamcha | Experience Imagination</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Tenor+Sans&family=Inter:wght@100;300&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary-glow: #4a9eff;
+            --secondary-glow: #7000ff;
+            --bg-deep: #020205;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Add this to your existing styles */
+body.warp-active {
+    background-color: white; /* Creates the "flash" effect */
+    transition: background-color 0.8s ease;
+}
+
+#landing-content {
+    transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1), 
+                filter 0.8s ease, 
+                opacity 0.6s ease;
+}
+
+.zoom-out-effect {
+    transform: scale(5); /* Zooms the text past the camera */
+    filter: blur(20px);
+    opacity: 0;
+}
+
+        body {
+            background-color: var(--bg-deep);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* --- Canvas Background --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(40px);
+        }
+
+        /* --- Navbar --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2.5rem 4rem;
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: 3rem;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #fff 30%, var(--primary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.9;
+        }
+
+        .tour-icon {
+            opacity: 0.6;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            cursor: pointer;
+        }
+
+        .tour-icon:hover {
+            opacity: 1;
+            transform: rotate(90deg) scale(1.1);
+            filter: drop-shadow(0 0 8px var(--primary-glow));
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 5;
+        }
+
+        .hero h1 {
+            font-family: 'Tenor Sans', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 100;
+            letter-spacing: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 8s infinite linear;
+            transition: all 0.8s ease;
+        }
+
+        .hero h1:hover {
+            letter-spacing: 2.5rem;
+            filter: blur(1px);
+            transform: scale(1.02);
+            text-shadow: 0 0 50px rgba(255,255,255,0.3);
+        }
+
+        .hero p {
+            font-size: 0.9rem;
+            letter-spacing: 0.6rem;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            transition: all 0.6s ease;
+        }
+
+        .hero:hover p {
+            color: #fff;
+            letter-spacing: 0.8rem;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* --- CTA Footer --- */
+        footer {
+            position: fixed;
+            bottom: 2.5rem;
+            right: 2.5rem;
+            padding: 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .btn-tour {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 1.2rem 3rem;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        /* The Radial Button Glow */
+        .btn-tour::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140%;
+            height: 300%;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 60%);
+            transform: translate(-50%, -50%);
+            opacity: 0.2;
+            animation: rotateGlow 6s infinite linear;
+        }
+
+        .btn-tour:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(-10px);
+            box-shadow: 0 0 30px rgba(74, 158, 255, 0.2);
+        }
+
+        @keyframes rotateGlow {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            nav, footer { padding: 1.5rem 2rem; }
+            .hero h1 { letter-spacing: 0.5rem; }
+            .hero h1:hover { letter-spacing: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div id="landing-content">
+        <nav>
+            <div class="logo">Zamcha</div>
+            <div class="tour-icon">
+                <i data-lucide="split"></i>
+            </div>
+        </nav>
+
+        <div class="hero">
+            <h1>Zamcha</h1>
+            <p>Experience your Imagination</p>
+        </div>
+
+        <footer>
+            <button class="btn-tour" onclick="startTour();">TAKE TOUR</button>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Canvas Background Animation
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let ripples = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Ripple {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = width / 2;
+                this.y = height / 2;
+                this.r = 0;
+                this.dr = Math.random() * 1 + 0.5;
+                this.opacity = 0;
+                this.maxOpacity = Math.random() * 0.3 + 0.1;
+            }
+            update() {
+                this.r += this.dr;
+                if (this.r < 200) this.opacity += 0.002;
+                else if (this.r > 400) this.opacity -= 0.001;
+
+                if (this.opacity <= 0 && this.r > 400) this.reset();
+            }
+            draw() {
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+                gradient.addColorStop(0, `rgba(74, 158, 255, 0)`);
+                gradient.addColorStop(0.8, `rgba(112, 0, 255, ${this.opacity * 0.5})`);
+                gradient.addColorStop(1, `rgba(74, 158, 255, 0)`);
+                
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            resize();
+            for(let i=0; i<3; i++) {
+                setTimeout(() => ripples.push(new Ripple()), i * 3000);
+            }
+            animate();
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(2, 2, 5, 0.15)';
+            ctx.fillRect(0, 0, width, height);
+            
+            ripples.forEach(r => {
+                r.update();
+                r.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        init();
+
+        // Parallax Mouse Effect
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - width/2) / 100;
+            const moveY = (e.clientY - height/2) / 100;
+            document.querySelector('.hero').style.transform = 
+                `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+        });
+
+        function startTour() {
+    const content = document.getElementById('landing-content'); // Wrap your nav, hero, and footer in this ID
+    const body = document.body;
+
+    // 1. Apply the visual zoom
+    content.classList.add('zoom-out-effect');
+    body.classList.add('warp-active');
+
+    // 2. Wait for animation to peak, then redirect
+    setTimeout(() => {
+        window.location.href = "taketour.html"; 
+    }, 750); 
+}
+    </script>
+</body>
+</html>

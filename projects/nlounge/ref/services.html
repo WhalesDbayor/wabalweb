@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N LOUNGE | The Services Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --nude: #F5EBE0;
+            --dark: #050505;
+            --glass: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--dark); color: var(--nude); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; background: #000; }
+        
+        canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
+
+        /* --- LAYOUT --- */
+        #services-container {
+            position: relative;
+            z-index: 10;
+            padding: 120px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 100px;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+        }
+
+        .section-header h1 { font-weight: 200; font-size: 0.8rem; color: var(--gold); }
+        .section-header p { font-size: 3rem; margin-top: 10px; font-weight: 200; }
+
+        /* --- THE KINETIC GRID --- */
+        .services-wrapper {
+            width: 90%;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 120px 60px;
+        }
+
+        .service-card {
+            position: relative;
+            height: 700px;
+            cursor: pointer;
+            overflow: visible;
+        }
+
+        /* Unique Staggered Heights */
+        .service-card:nth-child(even) { margin-top: 150px; }
+
+        .image-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.2);
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1s ease;
+            transform: scale(1.1);
+        }
+
+        /* Hover States */
+        .service-card:hover .image-container {
+            border-color: var(--gold);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .service-card:hover .image-container img {
+            filter: grayscale(0) contrast(1);
+            transform: scale(1);
+        }
+
+        /* Typography Overlay */
+        .card-content {
+            position: absolute;
+            bottom: -40px;
+            left: -20px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .card-number {
+            font-size: 0.7rem;
+            color: var(--gold);
+            display: block;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .card-title {
+            font-size: 4rem;
+            font-weight: 200;
+            text-transform: uppercase;
+            line-height: 0.8;
+            -webkit-text-stroke: 1px rgba(245, 235, 224, 0.3);
+            color: transparent;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .card-title {
+            color: var(--nude);
+            -webkit-text-stroke: 1px var(--nude);
+            transform: translateX(30px);
+        }
+
+        .card-category {
+            font-size: 0.6rem;
+            letter-spacing: 5px;
+            margin-top: 15px;
+            opacity: 0.5;
+            text-transform: uppercase;
+        }
+
+        /* Detail Trigger */
+        .explore-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--gold);
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .service-card:hover .explore-link { opacity: 1; }
+
+        @media (max-width: 900px) {
+            .services-wrapper { grid-template-columns: 1fr; gap: 80px; }
+            .service-card:nth-child(even) { margin-top: 0; }
+            .service-card { height: 500px; }
+            .card-title { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div id="services-container">
+        <header class="section-header">
+            <h1>Rituals & Excellence</h1>
+            <p>The <span style="font-style: italic; font-family: serif; color: var(--gold);">Collection</span></p>
+        </header>
+
+        <div class="services-wrapper">
+            <div class="service-card">
+                <div class="explore-link">[ VIEW RITUAL ]</div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1544161515-4af6b1d462c2?q=80&w=1200" alt="Spa">
+                </div>
+                <div class="card-content">
+                    <span class="card-number">01</span>
+                    <h2 class="card-title">SPA</h2>
+                    <p class="card-category">Skin Tech • Wellness • Renewal</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="explore-link">[ VIEW RITUAL ]</div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200" alt="Nails">
+                </div>
+                <div class="card-content">
+                    <span class="card-number">02</span>
+                    <h2 class="card-title">NAILS</h2>
+                    <p class="card-category">Artistry • Precision • Trend</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="explore-link">[ VIEW RITUAL ]</div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1200" alt="Hair Salon">
+                </div>
+                <div class="card-content">
+                    <span class="card-number">03</span>
+                    <h2 class="card-title">SALON</h2>
+                    <p class="card-category">Silk Therapy • Color • Sculpt</p>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="explore-link">[ VIEW RITUAL ]</div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1200" alt="Barbershop">
+                </div>
+                <div class="card-content">
+                    <span class="card-number">04</span>
+                    <h2 class="card-title">BARBER</h2>
+                    <p class="card-category">Executive Grooming • Sharp • Elite</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // --- 3D AMBIENT BACKGROUND ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.getElementById('bg-canvas'),
+            antialias: true, 
+            alpha: true 
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Retaining the Refractive Crystal as a floating ambient element
+        const geometry = new THREE.IcosahedronGeometry(3, 1);
+        const material = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            metalness: 0,
+            roughness: 0.1,
+            transmission: 0.9,
+            thickness: 2,
+            transparent: true,
+            emissive: 0xD4AF37,
+            emissiveIntensity: 0.05
+        });
+        const crystal = new THREE.Mesh(geometry, material);
+        scene.add(crystal);
+
+        const light = new THREE.PointLight(0xD4AF37, 2);
+        light.position.set(5, 5, 5);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+
+        camera.position.z = 10;
+
+        // --- MOUSE & SCROLL INTERACTION ---
+        let targetY = 0;
+        let scrollY = 0;
+
+        window.addEventListener('scroll', () => {
+            targetY = window.scrollY;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Smoothly move crystal with scroll
+            scrollY += (targetY - scrollY) * 0.05;
+            crystal.position.y = scrollY * 0.005;
+            crystal.rotation.y += 0.002;
+            crystal.rotation.x += 0.001;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

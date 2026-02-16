@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zamcha | The Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Tenor+Sans&family=Inter:wght@100;300;400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary-glow: #4a9eff;
+            --bg-deep: #020205;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+    animation: tourEntry 1.2s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+}
+
+@keyframes tourEntry {
+    0% {
+        filter: brightness(5) blur(20px);
+        transform: scale(0.9);
+    }
+    100% {
+        filter: brightness(1) blur(0px);
+        transform: scale(1);
+    }
+}
+
+/* Slide the cards up individually for extra polish */
+.glass-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: cardSlideUp 0.8s ease forwards 0.5s;
+}
+
+@keyframes cardSlideUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+        body {
+            background-color: var(--bg-deep);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Enable horizontal flow */
+            height: 100vh;
+        }
+
+        /* --- Reusable Background --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            filter: blur(60px);
+            opacity: 0.6;
+        }
+
+        /* --- Tour Navigation --- */
+        .tour-nav {
+            position: fixed;
+            top: 0; width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 2rem 4rem;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .back-link:hover { color: #fff; transform: translateX(-5px); }
+
+        /* --- Horizontal Scroller --- */
+        .tour-wrapper {
+            display: flex;
+            width: 300vw; /* 3 sections */
+            height: 100vh;
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        section {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10%;
+        }
+
+        .content-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 4rem;
+            border-radius: 40px;
+            backdrop-filter: blur(20px);
+            max-width: 800px;
+            position: relative;
+            animation: cardAppear 1.5s ease;
+        }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .step-num {
+            font-family: 'Tenor Sans';
+            font-size: 0.8rem;
+            color: var(--primary-glow);
+            letter-spacing: 5px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        h2 {
+            font-family: 'Tenor Sans';
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 100;
+            letter-spacing: 3px;
+        }
+
+        p {
+            line-height: 1.8;
+            color: rgba(255,255,255,0.7);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        /* --- Tour Controls --- */
+        .controls {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid var(--primary-glow);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.4s;
+        }
+
+        .dot.active {
+            background: var(--primary-glow);
+            box-shadow: 0 0 15px var(--primary-glow);
+            width: 30px;
+            border-radius: 10px;
+        }
+
+        /* The Flash Overlay */
+#transition-shutter {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: white;
+    opacity: 0;
+    z-index: 9999;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in;
+}
+
+/* The Warp Effect Canvas */
+#warp-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0;
+}
+
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="warp-canvas"></canvas>
+
+    <nav class="tour-nav">
+        <a href="#" class="back-link" onclick="window.history.back()">
+            <i data-lucide="arrow-left" size="18"></i> EXIT TOUR
+        </a>
+        <div class="logo" style="font-family: 'Mrs Saint Delafield'; font-size: 2rem;">Zamcha</div>
+    </nav>
+
+    <div class="tour-wrapper" id="master-slide">
+        <section>
+            <div class="content-card">
+                <span class="step-num">01 / CONCEPT</span>
+                <h2>The Void of Creation</h2>
+                <p>Zamcha is more than a platform; it is a canvas for the subconscious. Here, we bridge the gap between digital precision and human intuition. Every pixel is a pulse, every interaction an echo of your creative intent.</p>
+                <div style="display:flex; gap: 20px;">
+                    <i data-lucide="sparkles" class="primary-glow"></i>
+                    <i data-lucide="layers" style="opacity:0.3"></i>
+                    <i data-lucide="wind" style="opacity:0.3"></i>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="content-card">
+                <span class="step-num">02 / INTERFACE</span>
+                <h2>Invisible Precision</h2>
+                <p>Experience an interface that breathes with you. Our neural-design philosophy ensures that tools only appear when they are needed, leaving your imagination unconfined by traditional menus or sidebars.</p>
+                <div style="display:flex; gap: 20px;">
+                    <i data-lucide="sparkles" style="opacity:0.3"></i>
+                    <i data-lucide="layers" style="color:var(--primary-glow)"></i>
+                    <i data-lucide="wind" style="opacity:0.3"></i>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="content-card">
+                <span class="step-num">03 / REALITY</span>
+                <h2>Manifest Your Mind</h2>
+                <p>From the first ripple of an idea to a fully realized digital masterpiece. Zamcha provides the engine for your dreams to take physical form. Your journey starts now.</p>
+                <!-- <button class="btn-action" style="background:none; border: 1px solid var(--primary-glow); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">BEGIN CREATION</button> -->
+                <button class="btn-tour" onclick="triggerWarp()" class="btn-action" style="background:none; border: 1px solid var(--primary-glow); color: white; padding: 10px 20px; border-radius: 5px; cursor: pointer;">BEGIN CREATION</button>
+            </div>
+        </section>
+    </div>
+
+    <div class="controls">
+        <div class="dot active" onclick="goTo(0)"></div>
+        <div class="dot" onclick="goTo(1)"></div>
+        <div class="dot" onclick="goTo(2)"></div>
+    </div>
+
+    <div id="transition-shutter"></div>
+
+    <script>
+        lucide.createIcons();
+        let current = 0; // Track current slide index
+
+        // Background Animation (Same logic for continuity)
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(2, 2, 5, 0.1)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Simplified constant pulse for the tour
+            let time = Date.now() * 0.001;
+            let x = width/2 + Math.sin(time) * 100;
+            let y = height/2 + Math.cos(time) * 50;
+            
+            let g = ctx.createRadialGradient(x, y, 0, x, y, 400);
+            g.addColorStop(0, 'rgba(74, 158, 255, 0.1)');
+            g.addColorStop(1, 'transparent');
+            
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(x, y, 400, 0, Math.PI*2);
+            ctx.fill();
+            
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+
+        // Slider Logic
+        function goTo(index) {
+            // current = index;
+            const wrapper = document.getElementById('master-slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            wrapper.style.transform = `translateX(-${index * 100}vw)`;
+            
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        // Mousewheel navigation
+        window.addEventListener('wheel', (e) => {
+            if (e.deltaY > 0) {
+                current = Math.min(2, current + 1);
+                goTo(current);
+            } else if (e.deltaY < 0) {
+                current = Math.max(0, current - 1);
+                goTo(current);
+            }
+        });
+
+        function triggerWarp() {
+    const warpCanvas = document.getElementById('warp-canvas');
+    const shutter = document.getElementById('transition-shutter');
+    const ctx = warpCanvas.getContext('2d');
+    
+    warpCanvas.style.opacity = "1";
+    let speed = 0;
+    let stars = [];
+    
+    // Create star field
+    for(let i=0; i<200; i++) {
+        stars.push({
+            x: Math.random() * window.innerWidth - window.innerWidth/2,
+            y: Math.random() * window.innerHeight - window.innerHeight/2,
+            z: Math.random() * window.innerWidth
+        });
+    }
+
+    function animateWarp() {
+        ctx.fillStyle = "rgba(2, 2, 5, 0.2)"; // Trail effect
+        ctx.fillRect(0, 0, warpCanvas.width, warpCanvas.height);
+        
+        ctx.strokeStyle = "white";
+        speed += 0.5; // Accelerate
+
+        stars.forEach(s => {
+            s.z -= speed;
+            if(s.z <= 1) s.z = window.innerWidth;
+
+            let x = (s.x / s.z) * window.innerWidth + window.innerWidth/2;
+            let y = (s.y / s.z) * window.innerHeight + window.innerHeight/2;
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + (s.x/s.z)*speed, y + (s.y/s.z)*speed);
+            ctx.stroke();
+        });
+
+        if (speed < 40) {
+            requestAnimationFrame(animateWarp);
+        } else {
+            // Flash and Switch
+            shutter.style.opacity = "1";
+            setTimeout(() => {
+                // REDIRECT OR SHOW FORGE PAGE HERE
+                window.location.href = "creationforge.html"; 
+            }, 400);
+        }
+    }
+    // window.location.href='creationforge.html';
+    
+    warpCanvas.width = window.innerWidth;
+    warpCanvas.height = window.innerHeight;
+    animateWarp();
+}
+    </script>
+</body>
+</html>

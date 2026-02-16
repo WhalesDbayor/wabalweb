@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap');
+
+:root {
+  --accent: #1F9CF0;
+  --dark-bg: #050a0f;
+}
+
+body {
+  background: var(--dark-bg);
+  color: white;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+#map-canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  width: 50%;
+  height: 100%;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Tactical Input Styling */
+.input-group {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.input-field {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 0;
+  outline: none;
+  transition: 0.4s;
+}
+
+.input-field:focus {
+  border-bottom-color: var(--accent);
+}
+
+.label {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  color: #666;
+  pointer-events: none;
+  transition: 0.4s;
+}
+
+.input-field:focus~.label,
+.input-field:valid~.label {
+  top: -1rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.scan-line {
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  animation: scan 4s linear infinite;
+}
+
+@keyframes scan {
+  0% {
+    top: 0%;
+  }
+
+  100% {
+    top: 100%;
+  }
+}

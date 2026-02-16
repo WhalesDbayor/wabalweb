@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeoVant | High-Impact AI Strategy</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #060608;
+      --accent-blue: #00f0ff;
+      --accent-violet: #8b5cf6;
+      --glass: rgba(255, 255, 255, 0.02);
+      --glass-border: rgba(255, 255, 255, 0.08);
+        --font-head: 'Orbitron', 'Syne', Arial, sans-serif;
+        --font-body: 'Inter', 'Plus Jakarta Sans', Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: white;
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      letter-spacing: -0.01em;
+    }
+
+      h1,
+      h2,
+      h3,
+      .logo,
+      .gradient-text,
+      .portal-input:focus,
+      button,
+      label {
+        font-family: var(--font-head);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    /* Custom Cursor */
+    #cursor {
+      width: 12px;
+      height: 12px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: 0 0 15px var(--accent-blue);
+    }
+
+    /* Hero Background Canvas */
+    canvas#hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.4;
+    }
+
+    /* Glassmorphism */
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 2px;
+      transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .glass-card:hover {
+      border-color: var(--accent-blue);
+      background: rgba(0, 240, 255, 0.03);
+      transform: translateY(-8px);
+    }
+
+    /* Typing Cursor Effect */
+    .typing-cursor::after {
+      content: "|";
+      animation: blink 1s infinite;
+      color: var(--accent-blue);
+      margin-left: 4px;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #fff 30%, var(--accent-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    button {
+      font-family: var(--font-head);
+      letter-spacing: 0.1em;
+      transition: box-shadow 0.3s, background 0.3s, color 0.3s;
+      box-shadow: 0 0 0px var(--accent-blue), 0 0 0px #fff;
+    }
+
+    button:hover,
+    .glass-card button:hover {
+      box-shadow: 0 0 18px 4px var(--accent-blue), 0 0 8px 2px #fff;
+      background: var(--accent-blue);
+      color: #000;
+      border-color: var(--accent-blue);
+    }
+
+    .portal-input {
+      background: transparent;
+      border-bottom: 1px solid var(--glass-border);
+      width: 100%;
+      padding: 1rem 0;
+      color: white;
+      outline: none;
+      font-size: 1.25rem;
+      transition: border-color 0.3s;
+    }
+
+    .portal-input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    #transformation-portal {
+      display: none;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="cursor"></div>
+
+  <div id="page-transition">
+        <div class="text-center">
+            <div class="logo text-4xl mb-4 tracking-tighter transition-logo">NEOVANT</div>
+            <div class="h-1 w-0 bg-[var(--accent-blue)] mx-auto transition-bar"></div>
+            <div class="text-[10px] mt-4 tracking-[0.5em] text-blue-400 opacity-0 transition-text">SYSTEM INITIALIZING...</div>
+        </div>
+    </div>
+
+    <main id="main-site">
+
+  <nav
+    class="fixed top-0 w-full z-50 flex justify-between items-center px-8 py-6 bg-black/40 backdrop-blur-xl border-b border-white/5">
+    <div class="text-xl font-extrabold tracking-tighter logo">NEOVANT<span class="text-[var(--accent-blue)]">.</span>
+    </div>
+    <div class="hidden md:flex space-x-12 text-[10px] uppercase tracking-[0.4em] font-semibold opacity-60">
+      <a href="#services" class="hover:text-[var(--accent-blue)] transition">Solutions</a>
+      <a href="#process" class="hover:text-[var(--accent-blue)] transition">Process</a>
+      <a href="#contact" class="hover:text-[var(--accent-blue)] transition">Contact</a>
+    </div>
+    <a href="#"
+      class="px-6 py-3 border border-[var(--accent-blue)]/30 hover:bg-[var(--accent-blue)] hover:text-black transition-all duration-500 text-[10px] uppercase tracking-widest font-bold">
+      Connect
+    </a>
+  </nav>
+
+  <section class="relative h-screen flex flex-col justify-center items-center text-center px-6">
+    <canvas id="hero-canvas"></canvas>
+    <div class="max-w-6xl z-10">
+      <h1 class="text-5xl md:text-7xl font-extrabold leading-tight md:leading-[1.05] mb-8 reveal-text tracking-tight">
+        INTELLIGENT<br><span class="gradient-text">SYSTEMS.</span>
+      </h1>
+      <p class="text-lg md:text-xl font-light opacity-50 mb-12 max-w-xl mx-auto reveal-subtext">
+        Architecture and strategy for the next generation of digital-first enterprises.
+      </p>
+      <div class="reveal-btns">
+        <button
+          class="px-12 py-6 bg-white text-black font-bold uppercase text-xs hover:bg-[var(--accent-blue)] hover:text-black transition-all" id="initiate-btn">
+          Initiate Transformation
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="min-h-screen flex items-center justify-center bg-[#08080a] py-40">
+    <div class="max-w-5xl px-10 w-full">
+      <div class="narrative space-y-24">
+        <h2 class="type-text text-3xl md:text-5xl font-bold leading-snug min-h-[1.5em] tracking-tight"
+          data-text="Most companies experiment with AI."></h2>
+
+        <h2 class="type-text text-3xl md:text-5xl font-bold leading-snug min-h-[1.5em] tracking-tight"
+          data-text="Few implement it strategically."></h2>
+
+        <h2
+          class="type-text text-3xl md:text-5xl font-bold leading-snug min-h-[1.5em] text-[var(--accent-blue)] tracking-tight"
+          data-text="Even fewer scale it successfully."></h2>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="py-40 px-10">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-32">
+        <p class="text-[var(--accent-blue)] text-xs font-bold tracking-[0.5em] uppercase mb-4">// CORE STACK</p>
+        <h3 class="text-4xl md:text-6xl font-extrabold">ENGINEERING THE FUTURE</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card p-12 h-[500px] flex flex-col justify-between">
+          <div>
+            <div class="text-[var(--accent-blue)] mb-8 text-xs font-mono">01/</div>
+            <h4 class="text-2xl font-bold mb-6">Autonomous Workflows</h4>
+            <p class="opacity-40 leading-relaxed font-light">Self-optimizing agentic systems that handle complex
+              decision-making loops without human intervention.</p>
+          </div>
+          <div class="w-full h-px bg-white/10"></div>
+        </div>
+
+        <div class="glass-card p-12 h-[500px] flex flex-col justify-between">
+          <div>
+            <div class="text-[var(--accent-blue)] mb-8 text-xs font-mono">02/</div>
+            <h4 class="text-2xl font-bold mb-6">RAG Architecture</h4>
+            <p class="opacity-40 leading-relaxed font-light">Custom Retrieval-Augmented Generation pipelines designed
+              for enterprise-grade data security.</p>
+          </div>
+          <div class="w-full h-px bg-white/10"></div>
+        </div>
+
+        <div class="glass-card p-12 h-[500px] flex flex-col justify-between">
+          <div>
+            <div class="text-[var(--accent-blue)] mb-8 text-xs font-mono">03/</div>
+            <h4 class="text-2xl font-bold mb-6">Cognitive Strategy</h4>
+            <p class="opacity-40 leading-relaxed font-light">Long-term AI roadmapping to ensure your technical debt
+              stays low while innovation scales high.</p>
+          </div>
+          <div class="w-full h-px bg-white/10"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-60 text-center relative">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-4xl md:text-7xl font-black mb-12 tracking-tight">LET'S BUILD.</h2>
+      <button
+        class="px-16 py-8 bg-[var(--accent-blue)] text-black text-xs font-black uppercase tracking-[0.2em] hover:scale-105 transition-transform">
+        Consult with an Architect
+      </button>
+    </div>
+  </section>
+
+  <footer
+    class="py-10 px-10 border-t border-white/5 flex justify-between items-center text-[10px] uppercase tracking-[0.3em] opacity-30">
+    <div>NeoVant / 2026</div>
+    <div>All Systems Operational</div>
+  </footer>
+  </main>
+
+  <div id="transformation-portal" class="min-h-screen pt-32 px-10">
+    <!-- Modal -->
+    <div id="strategy-modal" style="display:none;" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm">
+      <div class="bg-[#10101a] border border-[var(--accent-blue)] rounded-2xl shadow-2xl p-10 max-w-md w-full relative animate-fadeIn">
+        <button id="close-modal" class="absolute top-4 right-4 text-[var(--accent-blue)] text-2xl font-bold hover:text-white transition">&times;</button>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-extrabold mb-4 gradient-text">Strategy Synchronized!</div>
+          <p class="text-base opacity-70 mb-6">Thank you for submitting your transformation objectives. Our architects will reach out to you soon to begin your AI journey.</p>
+          <button id="modal-ok" class="px-8 py-3 bg-[var(--accent-blue)] text-black font-bold uppercase text-xs rounded-full hover:bg-white transition-all">OK</button>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-20">
+        <p class="text-[var(--accent-blue)] text-xs font-bold tracking-[0.5em] uppercase mb-4">// PHASE 01: INTAKE</p>
+        <h2 class="text-5xl md:text-7xl font-extrabold mb-6">ARCHITECT YOUR<br>ADVANTAGE</h2>
+        <p class="opacity-40 max-w-lg">Complete the baseline parameters to synchronize our strategy engine with your
+          technical objectives.</p>
+      </div>
+
+      <form class="space-y-16 pb-40">
+        <div class="group">
+          <label
+            class="text-[10px] uppercase tracking-widest opacity-40 group-focus-within:text-[var(--accent-blue)] transition-colors">01.
+            Identification</label>
+          <input type="text" placeholder="Your Full Name" class="portal-input">
+        </div>
+        <div class="group">
+          <label
+            class="text-[10px] uppercase tracking-widest opacity-40 group-focus-within:text-[var(--accent-blue)] transition-colors">02.
+            Enterprise Context</label>
+          <input type="text" placeholder="Company Name & Domain" class="portal-input">
+        </div>
+        <div class="group">
+          <label
+            class="text-[10px] uppercase tracking-widest opacity-40 group-focus-within:text-[var(--accent-blue)] transition-colors">03.
+            Transformation Objective</label>
+          <select class="portal-input bg-transparent">
+            <option class="bg-black">Autonomous Workflows</option>
+            <option class="bg-black">RAG & Knowledge Systems</option>
+            <option class="bg-black">Strategic AI Roadmapping</option>
+          </select>
+        </div>
+        <button type="submit"
+          id="sync-strategy-btn"
+          class="px-16 py-8 bg-white text-black font-bold uppercase text-xs hover:bg-[var(--accent-blue)] transition-all">
+          Synchronize Strategy
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.4s cubic-bezier(0.23,1,0.32,1); }
+  </style>
+  <script>
+        // Modal logic for Synchronize Strategy
+        const syncBtn = document.getElementById('sync-strategy-btn');
+        const modal = document.getElementById('strategy-modal');
+        const closeModal = document.getElementById('close-modal');
+        const modalOk = document.getElementById('modal-ok');
+        if (syncBtn && modal && closeModal && modalOk) {
+          syncBtn.closest('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            modal.style.display = 'flex';
+          });
+          closeModal.addEventListener('click', () => { modal.style.display = 'none'; });
+          modalOk.addEventListener('click', () => { modal.style.display = 'none'; });
+          // Optional: close modal on overlay click
+          modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+        }
+    // 1. Smooth Scroll (Lenis)
+    const lenis = new Lenis();
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // 2. Custom Cursor
+    const cursor = document.getElementById('cursor');
+    window.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+    });
+
+    // 3. Three.js Background
+    let particleSpeed = 0.0005; // Default speed for particle animation
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-canvas'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const particles = new THREE.BufferGeometry();
+    const count = 3000;
+    const posArray = new Float32Array(count * 3);
+    for (let i = 0; i < count * 3; i++) { posArray[i] = (Math.random() - 0.5) * 1000; }
+    particles.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const material = new THREE.PointsMaterial({ size: 1.5, color: 0x00f0ff, transparent: true, opacity: 0.5 });
+    const mesh = new THREE.Points(particles, material);
+    scene.add(mesh);
+    camera.position.z = 400;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      mesh.rotation.y += particleSpeed;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // 4. Typing Animation Logic
+    gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+    const typeTexts = document.querySelectorAll(".type-text");
+
+    typeTexts.forEach((textElement) => {
+      const targetText = textElement.getAttribute("data-text");
+
+      gsap.to(textElement, {
+        duration: 1.5,
+        text: targetText,
+        ease: "none",
+        scrollTrigger: {
+          trigger: textElement,
+          start: "top 80%",
+          toggleActions: "play none none none"
+        },
+        onStart: () => textElement.classList.add("typing-cursor"),
+        onComplete: () => textElement.classList.remove("typing-cursor")
+      });
+    });
+
+    // 5. Hero Animations
+    const tl = gsap.timeline();
+    tl.from(".reveal-text", { y: 150, skewY: 7, opacity: 0, duration: 1.5, ease: "power4.out" })
+      .from(".reveal-subtext", { opacity: 0, y: 20, duration: 1 }, "-=1")
+      .from(".reveal-btns", { opacity: 0, scale: 0.9, duration: 1 }, "-=0.8");
+
+    // 6. Section Scroll In/Out Effects
+    document.querySelectorAll('section').forEach(section => {
+      gsap.fromTo(section,
+        { opacity: 0, y: 120, scale: 0.98, filter: 'blur(16px)' },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'blur(0px)',
+          duration: 1.2,
+          ease: 'power4.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play reverse play reverse',
+            onLeave: () => gsap.to(section, { opacity: 0, y: -120, scale: 0.98, filter: 'blur(16px)', duration: 0.8, ease: 'power4.in' }),
+            onEnterBack: () => gsap.to(section, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.2, ease: 'power4.out' })
+          }
+        }
+      );
+    });
+
+    // 3. Page Transition Logic
+    const initiateBtn = document.getElementById('initiate-btn');
+    const transitionOverlay = document.getElementById('page-transition');
+    const mainSite = document.getElementById('main-site');
+    const portal = document.getElementById('transformation-portal');
+
+    if (initiateBtn && transitionOverlay && mainSite && portal) {
+      initiateBtn.addEventListener('click', () => {
+        const tl = gsap.timeline();
+
+        // Step 1: Accelerate Particles & Slide Overlay Up
+        tl.add(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); })
+          .to({}, { // Animate particleSpeed using a dummy object
+            duration: 1.5,
+            onUpdate: function() { particleSpeed = 0.05 * this.progress() + 0.0005 * (1 - this.progress()); },
+            ease: "power2.in"
+          }, 0)
+          .to(transitionOverlay, { transform: "translateY(0%)", duration: 1.2, ease: "expo.inOut" }, 0.2)
+          .to(".transition-bar", { width: "100px", duration: 0.8 }, "-=0.2")
+          .to(".transition-text", { opacity: 1, duration: 0.4 }, "-=0.4");
+
+        // Step 2: Switch Content Hidden/Visible
+        tl.add(() => {
+          mainSite.style.display = 'none';
+          portal.style.display = 'block';
+          particleSpeed = 0.0002; // Reset particle speed for new page
+          window.scrollTo({ top: 0, behavior: 'auto' });
+        });
+
+        // Step 3: Slide Overlay Away & Reveal New Page
+        tl.to(transitionOverlay, { transform: "translateY(-100%)", duration: 1.2, ease: "expo.inOut" })
+          .to(portal, { opacity: 1, duration: 1 }, "-=0.8")
+          .from("#transformation-portal h2", { y: 50, opacity: 0, duration: 1, ease: "power4.out" }, "-=0.5");
+      });
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+
+</html>

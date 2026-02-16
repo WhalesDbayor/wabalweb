@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N LOUNGE & SPA | The Immersive Experience</title>
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --nude: #F5EBE0;
+            --dark: #0A0A0A;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--dark);
+            color: var(--nude);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow: hidden; /* Prevent native scroll for app feel */
+            height: 100vh;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* --- UI LAYER --- */
+        #ui-layer {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        #ui-layer * { pointer-events: auto; }
+
+        header {
+            position: fixed;
+            top: 40px;
+            width: 100%;
+            padding: 0 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            letter-spacing: 0.3rem;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+
+        .logo span { color: var(--gold); }
+
+        /* --- HERO SECTION --- */
+        .content-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+            position: absolute;
+        }
+
+        .content-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 0.9;
+            font-weight: 200;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .italic { font-style: italic; font-family: serif; }
+
+        /* --- APP NAVIGATION DOCK --- */
+        .app-dock {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            padding: 10px 20px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            z-index: 20;
+        }
+
+        .dock-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            border-radius: 50px;
+        }
+
+        .dock-item.active {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        /* --- MAGNETIC BUTTON --- */
+        .magnetic-btn {
+            background: none;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 20px 40px;
+            font-size: 0.9rem;
+            border-radius: 100px;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition);
+            margin-top: 30px;
+        }
+
+        .magnetic-btn:hover {
+            background: var(--gold);
+            color: var(--dark);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* --- MOBILE ADAPTATION --- */
+        @media (max-width: 768px) {
+            header { padding: 20px; top: 20px; }
+            .app-dock { width: 90%; justify-content: space-around; bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">N LOUNGE<span>&</span>SPA</div>
+        <div style="font-size: 0.7rem; letter-spacing: 2px;">LAGOS • BANANA VILLAGE</div>
+    </header>
+
+    <div id="ui-layer">
+        <section class="content-section active" id="home">
+            <h1>Beyond <br><span class="italic">Sanctuary</span></h1>
+            <p>High-Fidelity Beauty for the Global Lagosian.</p>
+            <button class="magnetic-btn">BOOK EXPERIENCE</button>
+        </section>
+
+        <section class="content-section" id="services">
+            <h1>Curated <br><span class="italic">Rituals</span></h1>
+            <p>From Tech-Infused Facials to Viral Artistry.</p>
+            <button class="magnetic-btn">VIEW MENU</button>
+        </section>
+    </div>
+
+    <nav class="app-dock">
+        <div class="dock-item active" onclick="switchSection('home')">Home</div>
+        <div class="dock-item" onclick="switchSection('services')">Services</div>
+        <div class="dock-item" onclick="switchSection('gallery')">Gallery</div>
+        <div class="dock-item" onclick="switchSection('contact')">Book</div>
+    </nav>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // --- THREE.JS ENGINE ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // --- LIQUID GOLD SHADER ---
+        const geometry = new THREE.PlaneGeometry(15, 10, 128, 128);
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                uTime: { value: 0 },
+                uMouse: { value: new THREE.Vector2(0, 0) },
+                uColorA: { value: new THREE.Color("#0A0A0A") }, // Midnight
+                uColorB: { value: new THREE.Color("#D4AF37") }  // Gold
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                uniform float uTime;
+                uniform vec2 uMouse;
+                void main() {
+                    vUv = uv;
+                    vec3 pos = position;
+                    float dist = distance(uv, uMouse);
+                    float wave = sin(pos.x * 1.5 + uTime) * 0.2;
+                    wave += sin(pos.y * 2.0 + uTime) * 0.1;
+                    pos.z += wave * (1.0 - dist); 
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                }
+            `,
+            fragmentShader: `
+                varying vec2 vUv;
+                uniform vec3 uColorA;
+                uniform vec3 uColorB;
+                uniform float uTime;
+                void main() {
+                    float mixValue = vUv.y + sin(uTime * 0.5) * 0.1;
+                    vec3 color = mix(uColorA, uColorB, mixValue);
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `,
+            wireframe: false
+        });
+
+        const liquidPlane = new THREE.Mesh(geometry, material);
+        scene.add(liquidPlane);
+        camera.position.z = 5;
+
+        // --- INTERACTIVITY ---
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = 1.0 - (e.clientY / window.innerHeight);
+            material.uniforms.uMouse.value.set(x, y);
+            
+            // Subtle camera tilt
+            camera.position.x += (e.clientX / window.innerWidth - 0.5) * 0.01;
+            camera.position.y += (-(e.clientY / window.innerHeight - 0.5)) * 0.01;
+        });
+
+        // --- SECTION SWITCHER ---
+        function switchSection(id) {
+            // Update UI
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            // Update Dock
+            document.querySelectorAll('.dock-item').forEach(d => d.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Animate 3D Background Intensity
+            material.uniforms.uColorB.value.set(id === 'home' ? "#D4AF37" : "#F5EBE0");
+        }
+
+        // --- ANIMATION LOOP ---
+        function animate() {
+            requestAnimationFrame(animate);
+            material.uniforms.uTime.value += 0.01;
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>

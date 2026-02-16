@@ -1,0 +1,49 @@
+:root {
+    --bg-dark: #0A0A0A;
+    --accent-gold: #D4AF37;
+    --nude-light: #F5EBE0;
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --transition-smooth: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--nude-light);
+    cursor: none; /* For custom cursor */
+}
+
+.glass-morph {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    transition: var(--transition-smooth);
+}
+
+.glass-morph:hover {
+    border-color: var(--accent-gold);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    width: 20px;
+    height: 20px;
+    background: var(--accent-gold);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: difference;
+}
+
+/* Three.js Canvas */
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    filter: brightness(0.7);
+}
