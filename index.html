@@ -7,6 +7,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/style.css">
+    <style>
+    /* Smooth pronounced float-in for hero content */
+    .hero-float-in {
+        opacity: 0;
+        will-change: transform, opacity;
+        transform: translateY(60px) scale(0.97);
+        transition:
+            opacity 1.1s cubic-bezier(.22,1,.36,1),
+            transform 1.3s cubic-bezier(.22,1,.36,1);
+    }
+    .hero-float-in.visible {
+        opacity: 1;
+        transform: translateY(0) scale(1.01);
+    }
+    </style>
+    <script src="script/herofloat.js" defer></script>
 </head>
 <body>
 
@@ -24,16 +40,16 @@
             <div class="hero-grain"></div>
         </div>
         <div class="max-w-5xl text-center relative z-10">
-            <div class="inline-block px-4 py-1.5 mb-6 text-sm font-medium glass-card rounded-full text-indigo-400">
+            <div class="inline-block px-4 py-1.5 mb-6 text-sm font-medium glass-card rounded-full text-indigo-400 hero-float-in">
                 Available for new projects in 2026
             </div>
-            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1] hero-float-in">
                 Websites that turn <span class="gradient-text">local visitors</span> into loyal customers.
             </h1>
-            <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed hero-float-in">
                 I build premium digital experiences for schools, service providers, and SMEs who are ready to outpace their competition.
             </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 hero-float-in">
                 <a href="#contact" class="btn-3d glow-strong w-full sm:w-auto text-center">
                     Request a Free Consultation
                 </a>

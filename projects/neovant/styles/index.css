@@ -1,0 +1,129 @@
+:root {
+  --bg-color: #060608;
+  --accent-blue: #00f0ff;
+  --accent-violet: #8b5cf6;
+  --glass: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --font-head: 'Orbitron', 'Syne', Arial, sans-serif;
+  --font-body: 'Inter', 'Plus Jakarta Sans', Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: white;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3,
+.logo,
+.gradient-text,
+.portal-input:focus,
+button,
+label {
+  font-family: var(--font-head);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Custom Cursor */
+#cursor {
+  width: 12px;
+  height: 12px;
+  background: var(--accent-blue);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 15px var(--accent-blue);
+}
+
+/* Hero Background Canvas */
+canvas#hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+/* Glassmorphism */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 2px;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.glass-card:hover {
+  border-color: var(--accent-blue);
+  background: rgba(0, 240, 255, 0.03);
+  transform: translateY(-8px);
+}
+
+/* Typing Cursor Effect */
+.typing-cursor::after {
+  content: "|";
+  animation: blink 1s infinite;
+  color: var(--accent-blue);
+  margin-left: 4px;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 30%, var(--accent-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button {
+  font-family: var(--font-head);
+  letter-spacing: 0.1em;
+  transition: box-shadow 0.3s, background 0.3s, color 0.3s;
+  box-shadow: 0 0 0px var(--accent-blue), 0 0 0px #fff;
+}
+
+button:hover,
+.glass-card button:hover {
+  box-shadow: 0 0 18px 4px var(--accent-blue), 0 0 8px 2px #fff;
+  background: var(--accent-blue);
+  color: #000;
+  border-color: var(--accent-blue);
+}
+
+.portal-input {
+  background: transparent;
+  border-bottom: 1px solid var(--glass-border);
+  width: 100%;
+  padding: 1rem 0;
+  color: white;
+  outline: none;
+  font-size: 1.25rem;
+  transition: border-color 0.3s;
+}
+
+.portal-input:focus {
+  border-color: var(--accent-blue);
+}
+
+#transformation-portal {
+  display: none;
+  opacity: 0;
+}

@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap');
+
+/* Design system for M & L Carpentry and Painting Corp */
+
+@layer base {
+  :root {
+    /* Core palette - warm, earthy, premium */
+    --background: 36 20% 97%;
+    --foreground: 20 15% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 20 15% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 15% 10%;
+
+    /* Primary: deep charcoal */
+    --primary: 20 10% 12%;
+    --primary-foreground: 36 20% 97%;
+
+    /* Secondary: warm stone */
+    --secondary: 36 15% 92%;
+    --secondary-foreground: 20 15% 15%;
+
+    /* Accent: rich amber/wood */
+    --accent: 32 85% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 36 15% 90%;
+    --muted-foreground: 20 10% 45%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 36 15% 85%;
+    --input: 36 15% 85%;
+    --ring: 32 85% 48%;
+
+    --radius: 0.75rem;
+
+    /* Custom design tokens */
+    --amber: 32 85% 48%;
+    --amber-light: 38 100% 60%;
+    --amber-dark: 25 75% 35%;
+    --charcoal: 20 10% 12%;
+    --stone: 36 15% 88%;
+    --cream: 36 20% 97%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(20 10% 8% / 0.85) 0%, hsl(20 15% 18% / 0.6) 50%, transparent 100%);
+    --gradient-amber: linear-gradient(135deg, hsl(32 85% 48%), hsl(25 75% 35%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(36 20% 97%));
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px hsl(20 10% 12% / 0.08);
+    --shadow-md: 0 8px 24px hsl(20 10% 12% / 0.12);
+    --shadow-lg: 0 20px 60px hsl(20 10% 12% / 0.18);
+    --shadow-amber: 0 8px 32px hsl(32 85% 48% / 0.35);
+    --shadow-3d: 0 4px 0 hsl(25 75% 32%), 0 8px 20px hsl(20 10% 12% / 0.25);
+    --shadow-3d-hover: 0 2px 0 hsl(25 75% 32%), 0 4px 12px hsl(20 10% 12% / 0.2);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 20 10% 8%;
+    --foreground: 36 20% 95%;
+    --card: 20 10% 10%;
+    --card-foreground: 36 20% 95%;
+    --popover: 20 10% 10%;
+    --popover-foreground: 36 20% 95%;
+    --primary: 36 20% 95%;
+    --primary-foreground: 20 10% 8%;
+    --secondary: 20 10% 15%;
+    --secondary-foreground: 36 20% 85%;
+    --muted: 20 10% 15%;
+    --muted-foreground: 36 15% 60%;
+    --accent: 32 85% 48%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 36 20% 95%;
+    --border: 20 10% 20%;
+    --input: 20 10% 20%;
+    --ring: 32 85% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .text-amber {
+    color: hsl(var(--accent));
+  }
+
+  .bg-amber {
+    background-color: hsl(var(--accent));
+  }
+
+  /* 3D Button effect */
+  .btn-3d {
+    box-shadow: var(--shadow-3d);
+    transform: translateY(0);
+    transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-3d:hover {
+    box-shadow: var(--shadow-3d-hover);
+    transform: translateY(2px);
+  }
+
+  .btn-3d:active {
+    box-shadow: 0 1px 0 hsl(25 75% 32%);
+    transform: translateY(4px);
+  }
+
+  /* Ghost 3D Button */
+  .btn-ghost-3d {
+    box-shadow: 0 4px 0 hsl(20 10% 12% / 0.4), 0 8px 20px hsl(20 10% 12% / 0.15);
+    transform: translateY(0);
+    transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-ghost-3d:hover {
+    box-shadow: 0 2px 0 hsl(20 10% 12% / 0.4), 0 4px 12px hsl(20 10% 12% / 0.12);
+    transform: translateY(2px);
+  }
+
+  /* Scroll reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Delay utilities */
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-400 { transition-delay: 400ms; }
+  .delay-500 { transition-delay: 500ms; }
+
+  /* Image hover zoom */
+  .img-zoom {
+    overflow: hidden;
+  }
+
+  .img-zoom img {
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .img-zoom:hover img {
+    transform: scale(1.06);
+  }
+
+  /* Shimmer line */
+  .shimmer-line {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shimmer-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, hsl(32 85% 48% / 0.2), transparent);
+    animation: shimmer 2.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(25 75% 35%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Number counter animation */
+  @keyframes count-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

@@ -7,6 +7,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/portfolio.css">
+    <style>
+    /* Enhanced Float-in animation */
+    .float-in {
+        opacity: 0;
+        will-change: transform, opacity;
+        transition:
+            opacity 1.2s cubic-bezier(.22,1,.36,1),
+            transform 1.4s cubic-bezier(.22,1,.36,1);
+    }
+    .float-in.visible {
+        opacity: 1;
+        transform: translate3d(0,0,0) scale(1.01);
+    }
+    </style>
+    <script src="script/floatin.js" defer></script>
 </head>
 <body class="p-6 md:p-12">
 
